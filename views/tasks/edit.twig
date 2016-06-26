@@ -1,0 +1,57 @@
+{% extends 'layout.twig' %}
+
+{% block title %} | Редактирование задачи{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2>Редактирование задачи</h2>
+        <form accept-charset="UTF-8" action="?controller=task&action=update&entity={{ task.id }}" method="POST">
+            {% if error|length %}
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{{ error }}</li>
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="name">Название</label>
+                <input type="text" id="name" name="name" value="{{ task.name }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="estimatedTime">Расчётное время, ч</label>
+                <input type="number" id="estimatedTime" name="estimatedTime" min="0" max="24" value="{{ task.estimatedTime }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="startDate">Дата начала</label>
+                <input type="text" id="startDate" name="startDate" placeholder="ДД.ММ.ГГГГ" value="{% if task.startDate|length %}{{ task.startDate|date('d.m.Y') }}{% endif %}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="endDate">Дата окончания</label>
+                <input type="text" id="endDate" name="endDate" placeholder="ДД.ММ.ГГГГ" value="{% if task.endDate|length %}{{ task.endDate|date('d.m.Y') }}{% endif %}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="status">Статус задачи</label>
+                <select name="statusId" id="statusId" class="form-control">
+                {% for status in statuses %}
+                    <option value="{{ status.id }}"{% if status.id == task.status.id %} selected="selected"{% endif %}>{{ status.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="user">Исполнитель</label>
+                <select name="userId" id="userId" class="form-control">
+                    <option value="0"{% if user.id == task.user.id %} selected="selected"{% endif %}>Не назначена</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}"{% if user.id == task.user.id %} selected="selected"{% endif %}>{{ user }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Обновить" class="btn btn-success">
+                <a href="{{ homeUrl }}?controller=task" class="btn btn-default" id="new-task">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

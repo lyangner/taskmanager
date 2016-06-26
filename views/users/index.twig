@@ -1,0 +1,41 @@
+{% extends 'layout.twig' %}
+
+{% block title %} | Пользователи{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h3>Список исполнителей</h3>
+            <a href="?controller=user&action=new" class="btn btn-success" id="new-task">Новый исполнитель</a>
+            {% if users|length > 0 %}
+                <table class="table">
+                    <tr class="top_t">
+                        <th>ID</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Отчество</th>
+                        <th>Действия</th>
+                    </tr>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.secondName }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.middleName }}</td>
+                            <td>
+                                <a href='?controller=user&action=edit&entity={{user.id}}'>
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
+                                <a href='?controller=user&action=delete&entity={{user.id}}'>
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>Нет сведений ни об одном исполнителе!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

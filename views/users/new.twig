@@ -1,0 +1,36 @@
+{% extends 'layout.twig' %}
+
+{% block title %} | Новый пользователь{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Новый пользователь</h2>
+            <form accept-charset="UTF-8" action="?controller=user&action=create&entity=user" method="POST">
+                {% if error|length %}
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{{ error }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="middleName">Отчество</label>
+                    <input type="text" id="middleName" name="middleName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="secondName">Фамилия</label>
+                    <input type="text" id="secondName" name="secondName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Создать" class="btn btn-success">
+                    <a href="{{ homeUrl }}?controller=user" class="btn btn-default" id="new-task">Отменить</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

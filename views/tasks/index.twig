@@ -1,0 +1,47 @@
+{% extends 'layout.twig' %}
+
+{% block title %} | Задачи{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h3>Список задач </h3>
+        <a href="?controller=task&action=new" class="btn btn-success" id="new-task">Новая задача</a>
+        {% if tasks|length > 0 %}
+            <table class="table">
+                <tr class="top_t">
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Расчётное время, ч</th>
+                    <th>Дата начала</th>
+                    <th>Дата окончания</th>
+                    <th>Статус</th>
+                    <th>Исполнитель</th>
+                    <th>Действия</th>
+                </tr>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.id }}</td>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.estimatedTime }}</td>
+                        <td>{% if task.startDate|length %}{{ task.startDate|date('d.m.Y') }}{% endif %}</td>
+                        <td>{% if task.endDate|length %}{{ task.endDate|date('d.m.Y') }}{% endif %}</td>
+                        <td>{{ task.status }}</td>
+                        <td>{{ task.user.secondName }}</td>
+                        <td>
+                            <a href='?controller=task&action=edit&entity={{task.id}}'>
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href='?controller=task&action=delete&entity={{task.id}}'>
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Данные о задачах не заполнены!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
